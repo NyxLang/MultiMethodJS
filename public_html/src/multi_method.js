@@ -33,9 +33,16 @@
                 match = true;
 
                 for (j = 0; j < arg_array.length; j++) {
-                    if (!(arg_array[j] instanceof arg_type_array[j])) {
-                        match = false;
-                        break;
+                    if (arg_type_array[j] === String) {
+                        if (typeof arg_array[j] !== 'string') {
+                            match = false;
+                            break;
+                        }
+                    } else {
+                        if (!(arg_array[j] instanceof arg_type_array[j])) {
+                            match = false;
+                            break;
+                        }
                     }
                 }
             }

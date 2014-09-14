@@ -383,4 +383,23 @@
         delete global.myns.myns2;
         delete global.myns;
     });
+
+    test('Testing multi_method(): normal use with string or String object', function () {
+        var collide_message, s, score;
+
+        multi_method('collide', [String, String], function (a, b) {
+            collide_message = 'Behavior when ' + a.toString() + ' hits ' + b.toString();
+            return 10;
+        });
+
+        score = 0;
+        s = 'banana';
+        score += collide('apple', 'orange');
+        equal(score, 10);
+        equal(collide_message, 'Behavior when apple hits orange');
+        score += collide('apple', String(s));
+        equal(score, 20);
+        equal(collide_message, 'Behavior when apple hits banana');
+        delete global.collide;
+    });
 }(this));
