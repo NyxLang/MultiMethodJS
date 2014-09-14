@@ -6,7 +6,7 @@ Multiple dispatch for JavaScript
 Installation
 ------------
 
-The "multi_method.js" is located at "public_html/src/".
+The file "multi_method.js" is located at directory "public_html/src/".
 Only this single JavaScript file is required.
 
 Usage
@@ -56,6 +56,11 @@ multi_method('collide', [GiantSpaceship, GiantSpaceship], function (a, b) {
     return a.point + b.point;
 });
 
+multi_method('collide', ['string', 'number'], function (a, b) {
+    collide_message = 'Behavior when ' + a.toString() + ' hits ' + typeof b;
+    return 0;
+});
+
 a = new Asteroid();
 s = new Spaceship();
 g = new GiantSpaceship();
@@ -66,4 +71,5 @@ score += collide(s, a); // score = 42, collide_message = 'Behavior when spaceshi
 score += collide(a, a); // score = 44, collide_message = 'Behavior when asteroid hits asteroid'
 score += collide(g, g); // score = 244, collide_message = 'Behavior when giant spaceship hits giant spaceship'
 score += collide(g, a); // score = 345, collide_message = 'Behavior when spaceship hits asteroid'
+score += collide('apple', 3.14); // score = 345, collide_message = 'Behavior when apple hits number'
 ```
