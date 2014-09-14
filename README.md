@@ -60,10 +60,10 @@ a = new Asteroid();
 s = new Spaceship();
 g = new GiantSpaceship();
 score = 0;
-score += collide(a, s); // score = 11
-score += collide(s, s); // score = 31
-score += collide(s, a); // score = 42
-score += collide(a, a); // score = 44
-score += collide(g, g); // score = 244
-score += collide(g, a); // score = 345
+score += collide(a, s); // score = 11, collide_message = 'Behavior when asteroid hits spaceship'
+score += collide(s, s); // score = 31, collide_message = 'Behavior when spaceship hits spaceship'
+score += collide(s, a); // score = 42, collide_message = 'Behavior when spaceship hits asteroid'
+score += collide(a, a); // score = 44, collide_message = 'Behavior when asteroid hits asteroid'
+score += collide(g, g); // score = 244, collide_message = 'Behavior when giant spaceship hits giant spaceship'
+score += collide(g, a); // score = 345, collide_message = 'Behavior when spaceship hits asteroid'
 ```
