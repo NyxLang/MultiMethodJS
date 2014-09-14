@@ -384,22 +384,62 @@
         delete global.myns;
     });
 
-    test('Testing multi_method(): normal use with string or String object', function () {
-        var collide_message, s, score;
+    test('Testing multi_method(): normal use with type specified by typeof operator', function () {
+        var collide_message, score;
 
-        multi_method('collide', [String, String], function (a, b) {
-            collide_message = 'Behavior when ' + a.toString() + ' hits ' + b.toString();
-            return 10;
+        multi_method('collide', ['string', 'undefined'], function (a, b) {
+            collide_message = 'Behavior when ' + a.toString() + ' hits ' + typeof b;
+            return 1;
+        });
+
+        multi_method('collide', ['string', 'object'], function (a, b) {
+            collide_message = 'Behavior when ' + a.toString() + ' hits ' + typeof b;
+            return 1;
+        });
+
+        multi_method('collide', ['string', 'boolean'], function (a, b) {
+            collide_message = 'Behavior when ' + a.toString() + ' hits ' + typeof b;
+            return 1;
+        });
+
+        multi_method('collide', ['string', 'number'], function (a, b) {
+            collide_message = 'Behavior when ' + a.toString() + ' hits ' + typeof b;
+            return 1;
+        });
+
+        multi_method('collide', ['string', 'string'], function (a, b) {
+            collide_message = 'Behavior when ' + a.toString() + ' hits ' + typeof b;
+            return 1;
+        });
+
+        multi_method('collide', ['string', 'function'], function (a, b) {
+            collide_message = 'Behavior when ' + a.toString() + ' hits ' + typeof b;
+            return 1;
         });
 
         score = 0;
-        s = 'banana';
+        score += collide('apple', undefined);
+        equal(score, 1);
+        equal(collide_message, 'Behavior when apple hits undefined');
+        score += collide('apple', {});
+        equal(score, 2);
+        equal(collide_message, 'Behavior when apple hits object');
+        score += collide('apple', true);
+        equal(score, 3);
+        equal(collide_message, 'Behavior when apple hits boolean');
+        score += collide('apple', 1);
+        equal(score, 4);
+        equal(collide_message, 'Behavior when apple hits number');
         score += collide('apple', 'orange');
-        equal(score, 10);
-        equal(collide_message, 'Behavior when apple hits orange');
-        score += collide('apple', String(s));
-        equal(score, 20);
-        equal(collide_message, 'Behavior when apple hits banana');
+        equal(score, 5);
+        equal(collide_message, 'Behavior when apple hits string');
+
+        score += collide('apple', function () {
+            return this;
+        });
+
+        equal(score, 6);
+        equal(collide_message, 'Behavior when apple hits function');
         delete global.collide;
     });
 }(this));

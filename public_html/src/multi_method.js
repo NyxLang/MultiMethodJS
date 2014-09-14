@@ -33,10 +33,42 @@
                 match = true;
 
                 for (j = 0; j < arg_array.length; j++) {
-                    if (arg_type_array[j] === String) {
-                        if (typeof arg_array[j] !== 'string') {
-                            match = false;
-                            break;
+                    if (typeof arg_type_array[j] === 'string') {
+                        if (arg_type_array[j] === 'undefined') {
+                            if (arg_array[j] !== undefined) {
+                                match = false;
+                                break;
+                            }
+                        } else if (arg_type_array[j] === 'object') {
+                            if (typeof arg_array[j] !== 'object') {
+                                match = false;
+                                break;
+                            }
+                        } else if (arg_type_array[j] === 'boolean') {
+                            if (typeof arg_array[j] !== 'boolean') {
+                                match = false;
+                                break;
+                            }
+                        } else if (arg_type_array[j] === 'number') {
+                            if (typeof arg_array[j] !== 'number') {
+                                match = false;
+                                break;
+                            }
+                        } else if (arg_type_array[j] === 'string') {
+                            if (typeof arg_array[j] !== 'string') {
+                                match = false;
+                                break;
+                            }
+                        } else if (arg_type_array[j] === 'symbol') {
+                            if (typeof arg_array[j] !== 'symbol') {
+                                match = false;
+                                break;
+                            }
+                        } else if (arg_type_array[j] === 'function') {
+                            if (typeof arg_array[j] !== 'function') {
+                                match = false;
+                                break;
+                            }
                         }
                     } else {
                         if (!(arg_array[j] instanceof arg_type_array[j])) {
