@@ -15,7 +15,7 @@
     var call_function, create_prototype, function_dict, multi_method;
 
     call_function = function (name, that, arg_array) {
-        var arg_type_array, i, j, match, method_body, method_definition, method_definition_array, method_definition_count;
+        var arg_type_array, i, j, match, method_body, method_definition, method_definition_array, method_definition_count, type_of_arg;
 
         if (!function_dict.hasOwnProperty(name.toString())) {
             throw new ReferenceError();
@@ -34,41 +34,11 @@
 
                 for (j = 0; j < arg_array.length; j++) {
                     if (typeof arg_type_array[j] === 'string') {
-                        if (arg_type_array[j] === 'undefined') {
-                            if (arg_array[j] !== undefined) {
-                                match = false;
-                                break;
-                            }
-                        } else if (arg_type_array[j] === 'object') {
-                            if (typeof arg_array[j] !== 'object') {
-                                match = false;
-                                break;
-                            }
-                        } else if (arg_type_array[j] === 'boolean') {
-                            if (typeof arg_array[j] !== 'boolean') {
-                                match = false;
-                                break;
-                            }
-                        } else if (arg_type_array[j] === 'number') {
-                            if (typeof arg_array[j] !== 'number') {
-                                match = false;
-                                break;
-                            }
-                        } else if (arg_type_array[j] === 'string') {
-                            if (typeof arg_array[j] !== 'string') {
-                                match = false;
-                                break;
-                            }
-                        } else if (arg_type_array[j] === 'symbol') {
-                            if (typeof arg_array[j] !== 'symbol') {
-                                match = false;
-                                break;
-                            }
-                        } else if (arg_type_array[j] === 'function') {
-                            if (typeof arg_array[j] !== 'function') {
-                                match = false;
-                                break;
-                            }
+                        type_of_arg = typeof arg_array[j];
+
+                        if (arg_type_array[j].toString() !== type_of_arg.toString()) {
+                            match = false;
+                            break;
                         }
                     } else {
                         if (!(arg_array[j] instanceof arg_type_array[j])) {
