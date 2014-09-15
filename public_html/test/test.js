@@ -114,6 +114,11 @@
         });
 
         multi_method('collide', [Spaceship, Asteroid], function (a, b) {
+            collide_message = 'To be redefined';
+            return a.point + b.point;
+        });
+
+        multi_method('collide', [Spaceship, Asteroid], function (a, b) {
             collide_message = 'Behavior when spaceship hits asteroid';
             return a.point + b.point;
         });
@@ -209,6 +214,11 @@
 
         multi_method('myns.collide', [Spaceship, Spaceship], function (a, b) {
             collide_message = 'Behavior when spaceship hits spaceship';
+            return a.point + b.point;
+        });
+
+        multi_method('myns.collide', [Spaceship, Asteroid], function (a, b) {
+            collide_message = 'To be redefined';
             return a.point + b.point;
         });
 
@@ -309,6 +319,11 @@
 
         multi_method('myns.myns2.collide', [Spaceship, Spaceship], function (a, b) {
             collide_message = 'Behavior when spaceship hits spaceship';
+            return a.point + b.point;
+        });
+
+        multi_method('myns.myns2.collide', [Spaceship, Asteroid], function (a, b) {
+            collide_message = 'To be redefined';
             return a.point + b.point;
         });
 
