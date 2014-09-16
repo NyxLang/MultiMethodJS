@@ -7,8 +7,8 @@
  */
 /*jslint nomen: true, plusplus: true, vars: true, browser: true */
 /*properties
-    apply, create_prototype, hasOwnProperty, isArray, length, multi_method,
-    prototype, push, split, toString
+    apply, arg_type_array, create_prototype, hasOwnProperty, isArray, length,
+    method_body, multi_method, prototype, push, split, toString
 */
 (function (global) {
     'use strict';
@@ -28,7 +28,7 @@
         for (i = method_definition_count - 1; i >= 0; i--) {
             match = false;
             method_definition = method_definition_array[i];
-            arg_type_array = method_definition[0];
+            arg_type_array = method_definition.arg_type_array;
 
             if (arg_type_array.length === arg_count) {
                 match = true;
@@ -51,7 +51,7 @@
             }
 
             if (match) {
-                method_body = method_definition[1];
+                method_body = method_definition.method_body;
                 return method_body.apply(that, arg_array);
             }
         }
@@ -123,7 +123,11 @@
             old_method_definition_array = [];
         }
 
-        method_definition = [arg_type_array, method_body];
+        method_definition = {
+            'arg_type_array' : arg_type_array,
+            'method_body' : method_body
+        };
+
         function_dict[name.toString()] = [];
         method_definition_array = function_dict[name.toString()];
         old_method_definition_count = old_method_definition_array.length;
@@ -132,7 +136,7 @@
         for (i = 0; i < old_method_definition_count; i++) {
             match = false;
             old_method_definition = old_method_definition_array[i];
-            old_arg_type_array = old_method_definition[0];
+            old_arg_type_array = old_method_definition.arg_type_array;
 
             if (old_arg_type_array.length === arg_type_count) {
                 match = true;
