@@ -29,7 +29,6 @@ function GiantSpaceship() {
 }
 
 GiantSpaceship.prototype = create_prototype(Spaceship.prototype);
-collide_message = '';
 
 multi_method('collide', [Asteroid, Spaceship], function (a, b) {
     collide_message = 'Behavior when asteroid hits spaceship';
