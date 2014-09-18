@@ -101,7 +101,6 @@
         }
 
         GiantSpaceship.prototype = create_prototype(Spaceship.prototype);
-        collide_message = '';
 
         multi_method('collide', [Asteroid, Spaceship], function (a, b) {
             collide_message = 'Behavior when asteroid hits spaceship';
@@ -205,7 +204,6 @@
         }
 
         GiantSpaceship.prototype = create_prototype(Spaceship.prototype);
-        collide_message = '';
 
         multi_method('myns.collide', [Asteroid, Spaceship], function (a, b) {
             collide_message = 'Behavior when asteroid hits spaceship';
@@ -310,7 +308,6 @@
         }
 
         GiantSpaceship.prototype = create_prototype(Spaceship.prototype);
-        collide_message = '';
 
         multi_method('myns.myns2.collide', [Asteroid, Spaceship], function (a, b) {
             collide_message = 'Behavior when asteroid hits spaceship';
