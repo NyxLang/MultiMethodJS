@@ -6,10 +6,10 @@
  * @license http://opensource.org/licenses/MIT
  */
 /*jslint nomen: true, plusplus: true, vars: true, browser: true */
-/*global collide: false, create_prototype: false, equal: false, ok: false, module: false, multi_method: false, myns: false, test: false */
+/*global collide: false, collide2: false, create_prototype: false, equal: false, invoke: false, ok: false, module: false, multi_method: false, myns: false, test: false */
 /*properties
-    call, collide, constructor, isPrototypeOf, message, myns, myns2, name, point,
-    prototype, toString
+    call, collide, collide2, constructor, isPrototypeOf, message, myns, myns2,
+    name, point, prototype, toString
 */
 (function (global) {
     'use strict';
@@ -453,5 +453,102 @@
         equal(score, 6);
         equal(collide_message, 'Behavior when apple hits function');
         delete global.collide;
+    });
+
+    test('Testing invoke(): parameter type check', function () {
+        var error, error_message, error_name;
+
+        try {
+            invoke(null);
+            error = false;
+            error_message = '';
+            error_name = '';
+        } catch (e) {
+            error = true;
+            error_message = e.message.toString();
+            error_name = e.name.toString();
+        }
+
+        equal(error, true);
+        equal(error_message, '"name" should be a string.');
+        equal(error_name, 'TypeError');
+
+        try {
+            invoke('dummy', null);
+            error = false;
+            error_message = '';
+            error_name = '';
+        } catch (e) {
+            error = true;
+            error_message = e.message.toString();
+            error_name = e.name.toString();
+        }
+
+        equal(error, true);
+        equal(error_message, '"arg_type_array" should be an array.');
+        equal(error_name, 'TypeError');
+
+        try {
+            invoke('dummy', [], null);
+            error = false;
+            error_message = '';
+            error_name = '';
+        } catch (e) {
+            error = true;
+            error_message = e.message.toString();
+            error_name = e.name.toString();
+        }
+
+        equal(error, true);
+        equal(error_message, '"arg_array" should be an array.');
+        equal(error_name, 'TypeError');
+    });
+
+    test('Testing invoke(): normal use', function () {
+        var a, collide_message, error, error_message, error_name, s, score;
+
+        function Asteroid() {
+            this.point = 1;
+        }
+
+        function Spaceship() {
+            this.point = 10;
+        }
+
+        multi_method('collide2', [Asteroid, Spaceship], function (a, b) {
+            collide_message = 'Behavior when asteroid hits spaceship';
+            return a.point + b.point;
+        });
+
+        multi_method('collide2', ['object', 'object'], function (a, b) {
+            collide_message = 'Behavior when ' + typeof a + ' hits ' + typeof b;
+            return 0;
+        });
+
+        a = new Asteroid();
+        s = new Spaceship();
+        score = 0;
+        score += collide2(a, s);
+        equal(score, 0);
+        equal(collide_message, 'Behavior when object hits object');
+        score += invoke('collide2', [Asteroid, Spaceship], [a, s]);
+        equal(score, 11);
+        equal(collide_message, 'Behavior when asteroid hits spaceship');
+
+        try {
+            score += invoke('collide2', ['string', 'string'], [a, s]);
+            error = false;
+            error_message = '';
+            error_name = '';
+        } catch (e) {
+            error = true;
+            error_message = e.message.toString();
+            error_name = e.name.toString();
+        }
+
+        equal(error, true);
+        equal(error_message, 'No matching method.');
+        equal(error_name, 'ReferenceError');
+        delete global.collide2;
     });
 }(this));

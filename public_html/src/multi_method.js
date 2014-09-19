@@ -7,18 +7,18 @@
  */
 /*jslint nomen: true, plusplus: true, vars: true, browser: true */
 /*properties
-    apply, arg_type_array, create_prototype, hasOwnProperty, isArray, length,
-    method_body, multi_method, prototype, push, split, toString
+    apply, arg_type_array, create_prototype, hasOwnProperty, invoke, isArray,
+    length, method_body, multi_method, prototype, push, split, toString
 */
 (function (global) {
     'use strict';
-    var call_function, create_prototype, function_dict, multi_method;
+    var call_function, create_prototype, function_dict, invoke, multi_method;
 
     call_function = function (name, that, arg_array) {
         var arg_count, arg_type_array, i, j, match, method_body, method_definition, method_definition_array, method_definition_count, type_of_arg;
 
         if (!function_dict.hasOwnProperty(name.toString())) {
-            throw new ReferenceError();
+            throw new ReferenceError('No matching method.');
         }
 
         method_definition_array = function_dict[name.toString()];
@@ -73,6 +73,62 @@
 
         Ctor.prototype = proto;
         return new Ctor();
+    };
+
+    /**
+     * 
+     * @global
+     * @function invoke
+     * @param {String} name
+     * @param {Array} arg_type_array
+     * @param {Array} arg_array
+     */
+    invoke = function (name, arg_type_array, arg_array) {
+        var arg_type_count, defined_arg_type_array, i, j, match, method_body, method_definition, method_definition_array, method_definition_count;
+
+        if (typeof name !== 'string') {
+            throw new TypeError('"name" should be a string.');
+        }
+
+        if (!Array.isArray(arg_type_array)) {
+            throw new TypeError('"arg_type_array" should be an array.');
+        }
+
+        if (!Array.isArray(arg_array)) {
+            throw new TypeError('"arg_array" should be an array.');
+        }
+
+        if (!function_dict.hasOwnProperty(name.toString())) {
+            throw new ReferenceError('No matching method.');
+        }
+
+        method_definition_array = function_dict[name.toString()];
+        method_definition_count = method_definition_array.length;
+        arg_type_count = arg_type_array.length;
+
+        for (i = 0; i < method_definition_count; i++) {
+            match = false;
+            method_definition = method_definition_array[i];
+            defined_arg_type_array = method_definition.arg_type_array;
+
+            if (defined_arg_type_array.length === arg_type_count) {
+                match = true;
+
+                for (j = 0; j < arg_type_count; j++) {
+                    if (defined_arg_type_array[j] !== arg_type_array[j]) {
+                        match = false;
+                        break;
+                    }
+                }
+            }
+
+            if (match) {
+                method_body = method_definition.method_body;
+                return method_body.apply(this, arg_array);
+            }
+        }
+
+        throw new ReferenceError('No matching method.');
     };
 
     /**
@@ -159,5 +215,6 @@
 
     function_dict = {};
     global.create_prototype = create_prototype;
+    global.invoke = invoke;
     global.multi_method = multi_method;
 }(this));
