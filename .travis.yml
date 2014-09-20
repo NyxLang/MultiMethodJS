@@ -1,0 +1,5 @@
+language: PHP
+before_install:
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+script: phantomjs phantomjs/run-qunit.js ./public_html/index.html
