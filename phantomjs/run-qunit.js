@@ -1,4 +1,7 @@
 /**
+ * The following code is copied from https://gist.github.com/gmarik/1305062
+ */
+/**
  * Wait until the test condition is true or a timeout occurs. Useful for waiting
  * on a server response or for a ui change (fadeIn, etc.) to occur.
  *
