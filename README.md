@@ -1,7 +1,7 @@
 MultiMethodJS
 =============
 
-[![Build Status](https://travis-ci.org/xianrenb/MultiMethodJS.svg?branch=develop)](https://travis-ci.org/xianrenb/MultiMethodJS)
+[![Build Status](https://travis-ci.org/xianrenb/MultiMethodJS.svg?branch=master)](https://travis-ci.org/xianrenb/MultiMethodJS)
 
 Multiple dispatch for JavaScript
 
