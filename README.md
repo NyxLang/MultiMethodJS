@@ -74,3 +74,8 @@ score += collide(g, g); // score = 244, collide_message = 'Behavior when giant s
 score += collide(g, a); // score = 345, collide_message = 'Behavior when spaceship hits asteroid'
 score += collide('apple', 3.14); // score = 345, collide_message = 'Behavior when apple hits number'
 ```
+
+Method Ambiguities
+------------------
+The last method definition which the argument type(s) matching the argument(s) would be used when calling the function.
+There would be no warning for any ambiguity.
